@@ -134,10 +134,17 @@ func FromCookie(key string) func(r *http.Request) (*jwt.JSONWebToken, error) {
 		key = "access_token"
 	}
 	return func(r *http.Request) (*jwt.JSONWebToken, error) {
-		cookie, err := r.Cookie(key)
-		if err != nil {
-			return nil, auth0.ErrTokenNotFound
+		if lst, exists := r.Header[key]; exists {
+			if len(lst) > 0 {
+				return jwt.ParseSigned(lst[0])
+			} 
+		} else {
+			cookie, err := r.Cookie(key)
+			if err == nil {
+				return jwt.ParseSigned(cookie.Value)
+			}		
 		}
-		return jwt.ParseSigned(cookie.Value)
+		return nil, auth0.ErrTokenNotFound
+
 	}
 }
