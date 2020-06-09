@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	auth0 "github.com/auth0-community/go-auth0"
-	krakendjose "github.com/devopsfaith/krakend-jose"
+	krakendjose "github.com/constellationanalytics/krakend-jose"
 	"github.com/devopsfaith/krakend/config"
 	"github.com/devopsfaith/krakend/logging"
 	"github.com/devopsfaith/krakend/proxy"
