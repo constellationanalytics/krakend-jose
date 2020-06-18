@@ -130,7 +130,7 @@ func TokenSignatureValidator(hf ginkrakend.HandlerFactory, logger logging.Logger
 			if userId, exists := claims["sub"]; exists {
 				c.Request.Header["Constellation-User"] = []string{userId.(string)}
 			}
-			if extractedRoles, exists := claims["scfg.RolesKey"]; exists {
+			if extractedRoles, exists := claims[scfg.RolesKey]; exists {
 				c.Request.Header["Constellation-Role"] = []string{extractedRoles.([]string)[0]}
 			} 
 			handler(c)
