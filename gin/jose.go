@@ -123,7 +123,16 @@ func TokenSignatureValidator(hf ginkrakend.HandlerFactory, logger logging.Logger
 				c.AbortWithStatus(http.StatusForbidden)
 				return
 			}
-
+			
+			if org, exists := claims["http://constellation_org"]; exists {
+				c.Request.Header["Constellation-Organization"] = []string{org.(string)}
+			}
+			if userId, exists := claims["sub"]; exists {
+				c.Request.Header["Constellation-User"] = []string{userId.(string)}
+			}
+			if extractedRoles, exists := claims["scfg.RolesKey"]; exists {
+				c.Request.Header["Constellation-Role"] = []string{extractedRoles.([]string)[0]}
+			} 
 			handler(c)
 		}
 	}
