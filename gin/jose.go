@@ -131,7 +131,7 @@ func TokenSignatureValidator(hf ginkrakend.HandlerFactory, logger logging.Logger
 				c.Request.Header["Constellation-User"] = []string{userId.(string)}
 			}
 			if extractedRoles, exists := claims[scfg.RolesKey]; exists {
-				c.Request.Header["Constellation-Role"] = []string{extractedRoles.([]string)[0]}
+				c.Request.Header["Constellation-Role"] = []string{extractedRoles.([]interface{})[0].(string)}
 			} 
 			handler(c)
 		}
